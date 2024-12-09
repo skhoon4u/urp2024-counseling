@@ -8,6 +8,7 @@ This project is a simple chatbot application consisting of a frontend built with
 
 - Rule-Based Responses: Provides predefined responses to specific questions.
 - BlenderBot Model Responses: Generates responses using a deep learning model for queries not covered by the rule-based system.
+- Signup and Login available : Chat history is saved after logout.
 
 ## Installation and Setup
 
@@ -28,6 +29,9 @@ Download the finetuned_blenderbot model files and place them in the project root
 Node.js Server Setup
 ```sh
 npm install
+```
+```sh
+node ./backend/server.js
 ```
 - The server will run on port 3001.
 
@@ -50,6 +54,7 @@ python chatbot_service.py
 ### 4. Frontend Setup
 - Start the React App
 ```sh
+cd frontend
 npm start
 ```
 - The app will run on port 3000. You can access it in your browser at http://localhost:3000.
@@ -57,6 +62,7 @@ npm start
 ## Usage
 
 1. Open your browser and navigate to http://localhost:3000.
-2. Enter a message in the chat window and send it.
-3. If the message matches a rule-based response, you’ll receive an immediate reply.
-4. For other messages, the BlenderBot model will generate a response.
+2. Login. If you haven't made an account, sign up first.
+3. Enter a message in the chat window and send it.
+4. If the message matches a rule-based response, you’ll receive an immediate reply.
+5. For other messages, the BlenderBot model will generate a response.
