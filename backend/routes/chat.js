@@ -7,6 +7,8 @@ module.exports = function (jwtSecret) {
   // jwtSecret을 인자로 받음
   const router = express.Router();
 
+  
+
   // 채팅 기록 가져오기
   router.get("/", authMiddleware(jwtSecret), async (req, res) => {
     try {

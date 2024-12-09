@@ -23,8 +23,7 @@ const Chat = ({ setIsAuthenticated }) => {
   }, []);
 
   // 메시지 전송
-  const sendMessage = async (e) => {
-    e.preventDefault();
+  const sendMessage = async () => {
     if (!input.trim()) return;
 
     const userMessage = {
@@ -36,21 +35,39 @@ const Chat = ({ setIsAuthenticated }) => {
 
     try {
       // 서버에 사용자 메시지 저장
-      await axios.post("/chat", { sender: "user", text: input });
+      await axios.post(
+        "/api/chat", 
+        { sender: "user", text: input },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
       // 챗봇 응답 가져오기
-      const res = await axios.post("/chatbot", { message: input });
-      const botMessage = {
-        sender: "bot",
-        text: res.data.response,
-        timestamp: new Date().toISOString(),
-      };
-      setMessages((prevMessages) => [...prevMessages, botMessage]);
+      const res = await axios.post(
+        "/chatbot", 
+        { message: input },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
-      // 서버에 챗봇 응답 저장
-      await axios.post("/chat", { sender: "bot", text: res.data.response });
-    } catch (err) {
-      console.error("챗봇과의 통신 오류:", err);
+      const botMessage = res.data.response;
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { sender: "bot", text: botMessage, timestamp: new Date() },
+      ]);
+      } catch (error) {
+      console.error("메시지 전송 오류:", error);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { sender: "bot", text: "오류가 발생했습니다.", timestamp: new Date() },
+      ]);
+    
       const errorMessage = {
         sender: "bot",
         text: "죄송합니다. 문제가 발생했습니다.",

@@ -1,7 +1,8 @@
-// frontend/src/components/Signup.js
+// src/components/Signup.js
 import React, { useState } from "react";
 import axios from "../axiosConfig";
 import { useNavigate } from "react-router-dom";
+
 const Signup = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -25,66 +26,56 @@ const Signup = () => {
         password,
       });
       setMessage(res.data.message);
-      // 회원가입 성공 후 로그인 페이지로 리디렉션
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
+      setTimeout(() => navigate("/login"), 2000);
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.message) {
-        setMessage(err.response.data.message);
-      } else {
-        setMessage("회원가입 중 오류가 발생했습니다.");
-      }
+      setMessage(
+        err.response?.data?.message || "회원가입 중 오류가 발생했습니다."
+      );
     }
   };
 
   return (
-    <div
-      style={{
-        maxWidth: "400px",
-        margin: "auto",
-        padding: "20px",
-        border: "1px solid #ccc",
-        borderRadius: "5px",
-      }}
-    >
-      <h2>회원가입</h2>
-      {message && <p>{message}</p>}
-      <form onSubmit={onSubmit}>
-        <div style={{ marginBottom: "10px" }}>
-          <label>사용자 이름:</label>
+    <div className="max-w-md mx-auto p-8 border rounded shadow-lg bg-white">
+      <h2 className="text-2xl font-bold text-center mb-4">회원가입</h2>
+      {message && <p className="text-center text-red-500 mb-4">{message}</p>}
+      <form onSubmit={onSubmit} className="space-y-4">
+        <div>
+          <label className="block font-semibold">사용자 이름:</label>
           <input
             type="text"
             name="username"
             value={username}
             onChange={onChange}
             required
-            style={{ width: "100%", padding: "8px", boxSizing: "border-box" }}
+            className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-        <div style={{ marginBottom: "10px" }}>
-          <label>이메일:</label>
+        <div>
+          <label className="block font-semibold">이메일:</label>
           <input
             type="email"
             name="email"
             value={email}
             onChange={onChange}
             required
-            style={{ width: "100%", padding: "8px", boxSizing: "border-box" }}
+            className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-        <div style={{ marginBottom: "10px" }}>
-          <label>비밀번호:</label>
+        <div>
+          <label className="block font-semibold">비밀번호:</label>
           <input
             type="password"
             name="password"
             value={password}
             onChange={onChange}
             required
-            style={{ width: "100%", padding: "8px", boxSizing: "border-box" }}
+            className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-        <button type="submit" style={{ width: "100%", padding: "10px" }}>
+        <button
+          type="submit"
+          className="w-full py-2 px-4 bg-blue-500 text-white font-bold rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
           회원가입
         </button>
       </form>

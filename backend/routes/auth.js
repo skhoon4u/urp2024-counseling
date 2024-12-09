@@ -71,6 +71,8 @@ module.exports = function (jwtSecret) {
   // 로그인
   router.post("/login", async (req, res) => {
     const { email, password } = req.body;
+    console.log("POST /api/auth/login 호출됨");
+    console.log("요청 데이터:", req.body);
 
     console.log("Login 요청:", { email });
 

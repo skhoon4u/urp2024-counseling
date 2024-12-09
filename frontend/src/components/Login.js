@@ -1,8 +1,7 @@
-// frontend/src/components/Login.js
+// src/components/Login.js
 import React, { useState } from "react";
 import axios from "../axiosConfig";
 import { useNavigate, Link } from "react-router-dom";
-import "./Login.css"; // CSS 파일 임포트 (필요 시 생성)
 
 const Login = ({ setIsAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -21,64 +20,56 @@ const Login = ({ setIsAuthenticated }) => {
     e.preventDefault();
     try {
       const res = await axios.post("/auth/login", { email, password });
-      setMessage(res.data.message);
-      // 토큰 저장 (예: localStorage)
+      // 토큰 저장 및 인증 상태 업데이트
       localStorage.setItem("token", res.data.token);
       setIsAuthenticated(true);
-      // 로그인 성공 후 Chat 페이지로 리디렉션
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
+      navigate("/"); // 로그인 성공 시 메인으로 이동
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.message) {
-        setMessage(err.response.data.message);
-      } else {
-        setMessage("로그인 중 오류가 발생했습니다.");
-      }
+      setMessage(
+        err.response?.data?.message || "로그인 중 오류가 발생했습니다."
+      );
     }
   };
 
   return (
-    <div
-      style={{
-        maxWidth: "400px",
-        margin: "auto",
-        padding: "20px",
-        border: "1px solid #ccc",
-        borderRadius: "5px",
-      }}
-    >
-      <h2>로그인</h2>
-      {message && <p>{message}</p>}
-      <form onSubmit={onSubmit}>
-        <div style={{ marginBottom: "10px" }}>
-          <label>이메일:</label>
+    <div className="max-w-md mx-auto p-8 border rounded shadow-lg bg-white">
+      <h2 className="text-2xl font-bold text-center mb-4">로그인</h2>
+      {message && <p className="text-center text-red-500 mb-4">{message}</p>}
+      <form onSubmit={onSubmit} className="space-y-4">
+        <div>
+          <label className="block font-semibold">이메일:</label>
           <input
             type="email"
             name="email"
             value={email}
             onChange={onChange}
             required
-            style={{ width: "100%", padding: "8px", boxSizing: "border-box" }}
+            className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-        <div style={{ marginBottom: "10px" }}>
-          <label>비밀번호:</label>
+        <div>
+          <label className="block font-semibold">비밀번호:</label>
           <input
             type="password"
             name="password"
             value={password}
             onChange={onChange}
             required
-            style={{ width: "100%", padding: "8px", boxSizing: "border-box" }}
+            className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-        <button type="submit" style={{ width: "100%", padding: "10px" }}>
+        <button
+          type="submit"
+          className="w-full py-2 px-4 bg-blue-500 text-white font-bold rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
           로그인
         </button>
       </form>
-      <p style={{ textAlign: "center", marginTop: "10px" }}>
-        아직 계정이 없으신가요? <Link to="/signup">회원가입</Link>
+      <p className="text-center mt-4">
+        아직 계정이 없으신가요?{" "}
+        <Link to="/signup" className="text-blue-500 hover:underline font-semibold">
+          회원가입
+        </Link>
       </p>
     </div>
   );

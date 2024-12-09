@@ -21,42 +21,57 @@ git clone https://github.com/skhoon4u/urp2024-counseling.git
 ### 2. Download the Model Files
 
 Download the finetuned_blenderbot model files and place them in the project root directory.
+
 - Download Link : https://drive.google.com/drive/folders/1PdDOUckNtvS9_A92h29txMvV6IsHCubS?usp=drive_link
 - After downloading, copy the finetuned_blenderbot folder into the project root directory.
 
 ### 3. Backend Setup
 
 Node.js Server Setup
+
 ```sh
+cd backend
 npm install
 ```
+
 ```sh
 node ./backend/server.js
 ```
+
 - The server will run on port 3001.
 
 Flask Server Setup
+
 - Create and Activate a Virtual Environment (Optional)
+
 ```sh
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
+
 - Install Dependencies
+
 ```sh
 pip install -r requirements.txt
 ```
+
 - Start the Flask Server
+
 ```sh
 python chatbot_service.py
 ```
+
 - The server will run on port 5001.
 
 ### 4. Frontend Setup
+
 - Start the React App
+
 ```sh
 cd frontend
 npm start
 ```
+
 - The app will run on port 3000. You can access it in your browser at http://localhost:3000.
 
 ## Usage

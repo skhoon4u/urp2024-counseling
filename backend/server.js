@@ -47,7 +47,7 @@ mongoose
 
 // 라우트 가져오기
 const authRoutes = require("./routes/auth")(jwtSecret); // auth 라우트에 jwtSecret 전달
-const conversationRoutes = require("./routes/conversation");
+const conversationRoutes = require("./routes/conversation")(jwtSecret);
 const chatRoutes = require("./routes/chat")(jwtSecret); // 채팅 라우트에 jwtSecret 전달
 
 // 라우트 사용
